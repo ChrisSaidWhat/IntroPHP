@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Git Terminology</title>
+
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Paytone+One&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Exo+2&display=swap');
+
+        h1,
+        h3 {
+            font-family: 'Paytone One', sans-serif;
+            text-align: center;
+        }
+
+        h1 {
+            font-size: 4rem;
+        }
+
+        h3 {
+            font-size: 2rem;
+        }
+
+        p,
+        h6 {
+            font-family: 'Exo 2', sans-serif;
+        }
+
+        p {
+            max-width: 70ch;
+            margin: auto;
+        }
+
+        h6 {
+            text-align: center;
+        }
+
+        body {
+            background-color: #E84E33;
+            color: #0A0A0A;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+
+        iframe {
+            border: 2px solid #0A0A0A;
+        }
+
+        .container {
+            width: 50dvw;
+            margin-bottom: 0.67em;
+        }
+
+        .center_iframe {
+            display: flex;
+            justify-content: center;
+        }
+    </style>
+
+</head>
+
+<body>
+    <div class="container">
+        <h1>Git Terms</h1>
+        <div class="center_iframe">
+            <iframe width="560" height="315" src="https://www.youtube.com/embed/SWYqp7iY_Tc?si=mKhJMvc3vlWFoLOA"
+                title="YouTube video player" frameborder="0"
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                allowfullscreen></iframe>
+        </div>
+        <h6>Citation: Traversy Media</h6>
+        <h3>Version Control Software</h3>
+        <p>Version control software is a tool that track changes made to code over its history and links changes to
+            individual contributors. The code can be shared to many different machines, worked on separately, and then
+            merged again centrally without the chance of conflicting changes breaking the code. This allows for teams to
+            work faster, in a decentralized manner, with greater accuracy. (Geeks For Geeks, Traversy Media)</p>
+        <h3>Add</h3>
+        <p>The Git add command sends the file and its changes to a staging area where a snapshot is taken. This snapshot
+            can
+            be updated many times and will not leave local machine until it it is committed. This is the first step for
+            tracking a file. Git does not track it until you add it. (Git Documentation, Traversy Media)</p>
+        <h3>Commit</h3>
+        <p>The Git commit command takes the snapshot and adds it to the repository on the local machine. Until the
+            snapshot
+            is committed it remains in the staging area and is not tracked nor is it in the repository. (Git
+            Documentation,
+            Traversy Media)</p>
+        <h3>Push</h3>
+        <p>The Git push command updates "remote refs along with associated objects," according to the Git docs. However,
+            the
+            main use of the push command is to send the contents and changes of the local repository to the remote
+            repository on GitHub or one of the similar tools. It takes when we have added and committed and then puts
+            them
+            into the remote repository where it can be kept safe, updated, shared, and contributed to by others without
+            breaking the original code or any added thereafter. (Git Documentation, Traversy Media)</p>
+        <h3>Pull</h3>
+        <p>The Git pull command fetches "from and integrates with another repository or local branch," according to the
+            Git
+            docs. Basically, the pull command can be thought of as the opposite of the push command. This command takes
+            the
+            contents of the remote repository and puts them on the local machine in a local repository. It also behind
+            the
+            scenes is performing merges and fetches which is beyond the scope of the current assignment and
+            conversation.When the dev is done with their changes, they will again perform a push command to send the new
+            code to the remote repository. (Git Documentation, Traversy Media)</p>
+        <h3>Clone</h3>
+        <p>The Git clone command duplicates a remote repository and installs it on the local machine in a new directory.
+            This allows the dev to work on their own copy of code without effecting the original codebase. This also
+            enables
+            collaboration between devs from around the world without any physical interaction needed. As with the pull
+            command, the clone command involves branches and merging which is beyond the scope of the current assignment
+            and
+            conversation but it is valuable to note. (Git Documentation, Traversy Media)</p>
+    </div>
+</body>
+
+</html>
