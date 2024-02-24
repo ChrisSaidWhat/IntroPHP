@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>DMACC Contact Form</title>
+
+<style>
+    @import url('https://fonts.googleapis.com/css2?family=Roboto+Slab:wght@100..900&display=swap');
+    body {
+        display: grid;
+        grid-template-columns: 1fr 2fr;
+        grid-template-rows: 1fr;
+        background-color: #003DA7;
+        align-content: center;
+        color: #FFFFFF;
+        height: 100vh;
+        margin: 0px;
+    }
+
+    div {
+        display: grid;
+        align-content: center;
+        grid-column: 1/2;
+        grid-row: 1/2;
+    }
+
+    #formContainer {
+        display: grid;
+        align-content: center;
+        grid-column: 2/3;
+        grid-row: 1/2;
+    }
+
+	form	{
+        padding: 50px;
+        border: #FFFFFF 2px solid;
+		margin:auto;
+        display: grid;
+        grid-template-columns: 50% 50%;
+        gap: 20px;
+        border-radius: 20px;
+	}
+
+    fieldset {
+        text-align: center;
+    }
+
+    label {
+        font-family: "Roboto Slab", serif;
+        text-align: left;
+    }
+
+    select {
+        font-family: "Roboto Slab", serif;
+    }
+
+    textarea {
+        font-family: "Roboto Slab", serif;
+    }
+
+    input {
+        font-family: "Roboto Slab", serif;
+    }
+
+</style>
+
+</head>
+
+<body>
+    <div>
+        <img src="dmaccLogo.png" alt="DMACC logo">
+    </div>
+<div id="formContainer">
+<form id="form1" name="form1" method="post" action="formHandler.php">
+
+  	<label for="first_name">First Name:</label> 
+    <input type="text" name="first_name" id="first_name" />
+
+  	<label for="last_name">Last Name:</label> 
+    <input type="text" name="last_name" id="last_name" />
+
+  	<label for="school_name">School Name:</label> 
+    <input type="text" name="school_name" id="school_name" value="DMACC"/>
+
+        <label for="customer_email">Customer Email: </label>
+        <input type="email" name="customer_email" id="customer_email">
+
+        <label for="radioGroup">Academic Standing: </label>
+        <fieldset id="radioGroup">
+        <label for="high_school">High School</label>
+        <input type="radio" id="high_school" name="academic_standing" value="highSchool">
+        <label for="freshman">Freshman</label>
+        <input type="radio" id="freshman" name="academic_standing" value="freshman">
+        <label for="sophomore">Sophomore</label>
+        <input type="radio" id="sophomore" name="academic_standing" value="sophomore">
+        </fieldset>
+
+        <label for="selectProgram">Select Program: </label>
+        <select id="selectProgram" name="selectProgram">
+            <option value="">Select a Program: </option>
+            <option value="CIS">Computer Information Systems</option>
+            <option value="GRD">Graphic Design</option>
+            <option value="WDV">Web Development</option>
+        </select>
+
+        <label for="provideInfo">Please Contact Me W/ Program Information: </label>
+        <input type="checkbox" id="provideInfo" name="sendProgramInfo" value="Program Information" checked>
+        <label for="provideAdvisor">I Would Like to Contact a Program Advisor: </label>
+        <input type="checkbox" id="provideAdvisor" name="contactProgramAdvisor" value="Advisor Contact Information">
+
+        <label for="userComments">Comments: </label>
+        <textarea id="userComments" name="userComments" rows="10" cols="70" placeholder="Anything else you need us to know?"></textarea>
+
+    <input type="submit" name="button" id="button" value="Submit" />
+    <input type="reset" name="button2" id="button2" value="Reset" />
+
+</form>
+</div>
+</body>
+
+</html>
