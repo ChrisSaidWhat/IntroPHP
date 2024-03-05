@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta content="width=device-width, initial-scale=1.0" name="viewport">
+        <title>Image Uploader</title>
+        <style>
+            @import url("https://use.typekit.net/zlz3xtf.css");
+
+            body {
+                align-items: center;
+                background-image: url("texturedGradientBg.jpg");
+                background-size: cover;
+                display: grid;
+                height: 95vh;
+                justify-items: center;
+            }
+
+            fieldset {
+                background-color: rgba(99, 116, 155, .5);
+                display: grid;
+                gap: 10px;
+                grid-template-rows: 1fr 1fr;
+                height: 15vh;
+            }
+
+            div {
+                grid-row: 1/2;
+            }
+
+            input {
+                grid-row: 2/3;
+                justify-self: center;
+            }
+
+            .legend {
+                font-family: "avory-i-pe-variable", sans-serif;
+                font-size: larger;
+                font-variation-settings: 'wght' 401;
+            }
+
+            .fieldsetContents {
+                font-family: "avory-i-pe-variable", sans-serif;
+                font-variation-settings: 'wght' 182;
+            }
+
+            .fieldsetContentsAttr {
+                font-family: "avory-i-pe-variable", sans-serif;
+                font-size: x-small;
+                font-variation-settings: 'wght' 182;
+                justify-self: center;
+            }
+
+        </style>
+    </head>
+    <body>
+        <form action="uploader.php" enctype="multipart/form-data" method="post">
+            <fieldset>
+                <legend class="legend">Image Upload Software</legend>
+                <div class="fieldsetContents">
+                    <label for="fileUpload">Select Image To Upload: </label>
+                    <input id="fileUpload" name="uploaded" type="file">
+                </div>
+                <input class="fieldsetContents" name="submit" type="submit" value="Upload Image">
+                <p class="fieldsetContentsAttr">Image by <a
+                        href="https://www.freepik.com/free-vector/gradient-grainy-texture_14579694.htm#query=texture%20gradient&position=24&from_view=keyword&track=ais&uuid=9bc476e2-65c4-4828-b86f-aa3463984f18">Freepik</a>
+                </p>
+            </fieldset>
+        </form>
+    </body>
+</html>
