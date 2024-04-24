@@ -1,29 +1,86 @@
 <?php
-    session_start();
 
-    if($_SESSION["memberStatus"] == "member") {
-        //  we know you are signed on and have access to this page
+    $errMsg = "";   //  set a default value to this variable
+
+    $recId = $_GET['eventID'];
+
+    if (isset($_POST['submit'])) {
+        //  if the submit button has been sent to the server then the user SUBMITTED the form for processing
+        //  echo "<h1>Form has been submitted</h1>";
+        $display = "confirmation";
+
+        $validForm = true;  //  assume the form data is all good
+
+        $eventName = $_POST['eventName'];       //  get form data into PHP
+        $eventDesc = $_POST['eventDesc'];
+
+        //  validation
+        //  eventName cannot be blank
+        if(empty(trim($eventName))) {
+            //  bad data -- invalid form -> display err msg and show form
+            $validForm = false;
+            $errMsg = "Event name cannot be empty";
+            $display = "form";
+        }
+
+        if(empty(trim($eventDesc))) {
+            //  bad data -- invalid form -> display err msg and show form
+            $validForm = false;
+            $errMsgDesc = "Event description cannot be empty";
+            $display = "form";
+        }
+
+        //  if the form data is VALID then UPDATE the database
+
+        if ($validForm) {
+            //  update the database
+            try {
+                require "dbConnect.php";
+
+                $sql = "UPDATE wdv341_events SET events_name = :eventName, events_description = :eventDesc WHERE events_id = :eventID";
+
+                $stmt = $conn->prepare($sql);
+
+                $stmt->bindParam(':eventName', $eventName);
+                $stmt->bindParam(':eventDesc', $eventDesc);
+                $stmt->bindParam(':eventID', $recId);
+
+                $stmt->execute();
+
+                $display = "confirmation";  //  will display the confirmation msg
+            }
+            catch (PDOException $e) {
+                echo "Error: " . $e->getMessage();
+            }
+        }
     }
     else {
-        //  you are not a valid user
-        header("Location: login.php");
+        //  SELECT the data from the database
+        //  show the database content on the form
+        //  display the form
+        $display = "form";
+
+        try {
+            require "dbConnect.php";
+
+            $sql = "SELECT events_id, events_name, events_description FROM wdv341_events WHERE events_id = :eventID";
+
+            $stmt = $conn->prepare($sql);
+
+            $stmt->bindParam(':eventID', $recId);
+
+            $stmt->execute();
+
+            //  process the selected data into the form fields
+            $stmt->setFetchMode(PDO::FETCH_ASSOC);
+
+            $row = $stmt->fetch();
+        }
+        catch (PDOException $e) {
+            echo "Error: " . $e->getMessage();
+        }
     }
-
-    //  I need all the data for a selected event displayed to the page
-    //  to change it, I need that data in a form to allow me to change what was originally entered
-    //  once I make changes, move those changes to the database
-    //  then display the updated event OR return Display Events
-
-    //  get the data from the database - SELECT WHERE clause
-    //  put the data from the database into each of the form fields
-    //  display that form to the user
-    //  when the user submits the form, UPDATE the database with the input data
-    //  return to Display Events
-
-    //  form will look like the input event form, same data, same validations, same rules
-
 ?>
-
 <!doctype html>
 <html lang="en">
     <head>
@@ -34,22 +91,117 @@
         <title>Document</title>
     </head>
     <body>
-        <p>Update Event ID: <?php echo $_GET['eventID']; ?></p>
-        <form method="post" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>">
-            <p>
-                <label for="eventName">Event Name: </label>
-                <input type="text" name="eventName" id="eventName">
-            </p>
+        <h1>WDV341 Intro PHP</h1>
+        <h2>UPDATE Event Information</h2>
 
-            <p>
-                <label for="eventDescription">Event Description: </label>
-                <input type="text" name="eventDescription" id="eventDescription">
-            </p>
+        <?php
+            if ($display == "form") {
+                //  display form
+                ?>
+                <div
+                        class="updateForm"
+                >
+                    <form
+                            method="post"
+                            action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]) . '?eventID=' . $recId; ?>"
+                    >
+                        <p>
+                            <label
+                                    for="eventName"
+                            >
+                                Event Name:
+                            </label>
+                            <input
+                                    type="text"
+                                    size="40"
+                                    name="eventName"
+                                    id="eventName"
+                                    value="<?php
+                                        //  if you display the form then echo form data into the value
+                                        //  else display the value submitted on the form (err)
+                                        if(isset($row['events_name'])) {
+                                            echo $row['events_name'];
+                                        }
+                                        if(isset($eventName)) {
+                                            //  this is input from the submitted form -- need to put back on the form
+                                            echo $eventName;
+                                        }
+                                        ?>"
+                            >
+                            <span
+                                    class="errMsg"
+                            >
+                                <?php  echo $errMsg; ?>
+                            </span>
+                        </p>
 
-            <p>
-                <input type="submit" name="submit" value="Submit">
-                <input type="reset" value="Reset">
-            </p>
-        </form>
+                        <p>
+                            <label
+                                for="eventDesc"
+                            >
+                                Event Description:
+                            </label>
+                            <input
+                                type="text"
+                                name="eventDesc"
+                                id="eventDesc"
+                                size="100"
+                                value="<?php
+                                    //  if you display the form then echo form data into the value
+                                    //  else display the value submitted on the form (err)
+                                    if(isset($row['events_description'])) {
+                                        echo $row['events_description'];
+                                    }
+                                    if(isset($eventDesc)) {
+                                        //  this is input from the submitted form -- need to put back on the form
+                                        echo $eventDesc;
+                                    }
+                                ?>"
+                            >
+                            <span
+                                    class="errMsg"
+                            >
+                                <?php
+                                   if(isset($errMsgDesc)) {
+                                       echo $errMsgDesc;
+                                   };
+                                    ?>
+                            </span>
+                        </p>
+
+                        <p>
+                            <input
+                                    type="submit"
+                                    name="submit"
+                                    value="Update Event"
+                            >
+                            <input
+                                    type="reset"
+                            >
+                        </p>
+
+                    </form>
+                </div>
+                <?php
+            }
+            else {
+                //  display confirmation
+                ?>
+                <div
+                        class="confirmationMessage"
+                >
+                    <h1>Update Successful</h1>
+                    <p>
+                        <a
+                            href="selectEvents.php"
+                        >
+                            Return to Select
+                        </a>
+                    </p>
+                </div>
+                <?php
+            }
+        ?>
+
     </body>
 </html>
